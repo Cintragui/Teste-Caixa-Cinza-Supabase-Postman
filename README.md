@@ -5,17 +5,17 @@
 **Disciplina:** Teste de Software  
 **Atividade:** Teste individual de caixa cinza com Supabase e Postman  
 **Data da execução:** 07/11/2026  
-**Situação:** 5 testes executados no Postman Desktop; 15/15 asserções aprovadas. Evidências de configuração adicionais ainda podem ser anexadas.
+**Situação:** 5 testes executados no Postman Desktop; 15/15 asserções aprovadas. As cinco evidências dos cenários e três capturas de configuração do Supabase estão publicadas; demais evidências de configuração ainda pendentes.
 
-## 1. Introdução
+## Introdução
 
 Teste de caixa cinza combina a observação do comportamento externo da aplicação com conhecimento parcial de sua estrutura. Nesta atividade, foi testada a API REST de autenticação por e-mail e senha do Supabase, utilizando o Postman para enviar requisições HTTP e verificar respostas, códigos de status e campos JSON.
 
-## 2. Objetivo
+## Objetivo da Atividade
 
 Validar cinco situações de autenticação por senha: login válido, senha incorreta, usuário inexistente, campos vazios e credenciais inválidas. As avaliações verificam se o serviço retorna um token apenas para credenciais válidas e rejeita corretamente entradas inválidas.
 
-## 3. Configuração do Supabase
+## Configuração do Supabase
 
 - **Projeto:** Teste-Caixa-Cinza-Postman
 - **Região:** sa-east-1 (São Paulo)
@@ -27,7 +27,7 @@ Validar cinco situações de autenticação por senha: login válido, senha inco
 
 **Segurança:** o repositório não contém a senha real do usuário, refresh tokens, access tokens ou chaves de administração do Supabase.
 
-## 4. Configuração do Postman
+## Configuração do Postman
 
 Criado Workspace pessoal **Teste Caixa Cinza - Supabase** e coleção **Teste Caixa Cinza - Supabase Auth (5 cenários)**, contendo cinco requisições POST.
 
@@ -35,7 +35,7 @@ O Environment **Supabase - Caixa Cinza - Testes** define `base_url`, `api_key` (
 
 **Importação:** importar os dois JSON da pasta `postman/`, selecionar o Environment e preencher localmente as variáveis em branco. Se já estiverem sincronizados na conta, não é preciso importar novamente.
 
-## 5. Configuração das requisições
+## Configuração das Requisições
 
 **Método:** `POST`  
 **URL:** `{{base_url}}/auth/v1/token?grant_type=password`  
@@ -44,7 +44,7 @@ O Environment **Supabase - Caixa Cinza - Testes** define `base_url`, `api_key` (
 
 Com uma chave moderna `sb_publishable_...`, **não** enviar essa chave como `Authorization: Bearer`; o modelo deixa o header Authorization desabilitado. Nunca usar `service_role` nem `sb_secret_...` nos testes.
 
-## 6. Execução dos cinco testes
+## Execução dos Testes
 
 Os cinco cenários abaixo foram **executados pelo aluno no Postman Desktop** em 07/11/2026. Os resultados foram documentados a partir das capturas da ferramenta, que mostraram as respostas e a aba de testes.
 
@@ -58,7 +58,7 @@ Os cinco cenários abaixo foram **executados pelo aluno no Postman Desktop** em 
 
 **Resultado consolidado:** 5 de 5 cenários executados; **15 de 15 asserções aprovadas**; nenhuma falha de asserção nos cinco prints apresentados.
 
-## 7. Registro dos testes e respostas observadas
+## Registro dos Testes
 
 | ID | Tempo observado | Resposta do serviço | Interpretação |
 |---|---:|---|---|
@@ -72,7 +72,7 @@ Os tempos são os apresentados nas capturas do Postman, não métricas médias o
 
 A planilha de registro está em `planilha/Registro_Testes_Caixa_Cinza.csv`; os valores representam resultados observados e não simulados. A documentação adicional em `VALIDACAO_TECNICA_POSTMAN.md` separa os testes do aluno de uma execução assistida por monitor.
 
-## 8. Resultados obtidos e análise
+## Resultados Obtidos
 
 O serviço se comportou como esperado nos cinco cenários. O login válido retornou HTTP 200 com token de acesso. Todas as combinações inválidas foram recusadas com HTTP 400, sem token de acesso. O caso de campos vazios retornou mensagem específica de validação, enquanto os demais cenários inválidos retornaram `invalid_credentials`.
 
@@ -82,7 +82,7 @@ As 15 verificações automáticas do Postman passaram. O retorno HTTP 400, em te
 
 **Limitações:** o exercício avalia apenas uma rota de autenticação e cinco entradas. Não mede desempenho em escala, proteção contra força bruta ou controles avançados de autorização.
 
-## 9. Conclusão
+## Conclusão
 
 O teste de caixa cinza permitiu validar a autenticação do Supabase conhecendo a estrutura da requisição HTTP, o endpoint, os cabeçalhos e o formato JSON esperado. Os cinco cenários executados no Postman Desktop tiveram comportamento compatível com os requisitos previstos, totalizando 15 verificações aprovadas.
 
@@ -92,13 +92,28 @@ Os resultados reforçam a utilidade dos testes de caixa cinza em APIs: eles iden
 
 ## Evidências e estrutura
 
-- `postman/` — coleção JSON com os cinco cenários e Environment modelo sem credenciais.
-- `planilha/` — registro dos cinco casos e resultados observados.
-- `prints/` — diretório destinado às capturas reais de configuração e execução, com valores de tokens ocultos antes da publicação.
-- `VALIDACAO_TECNICA_POSTMAN.md` — relatório separado da validação técnica assistida.
+Os arquivos abaixo foram conferidos na pasta pública `prints/`:
+
+| Evidência | Arquivo |
+|---|---|
+| TC01 — Login válido, HTTP 200 e 3/3 testes | [TC1.png](prints/TC1.png) |
+| TC02 — Senha incorreta, HTTP 400 e 3/3 testes | [TC2.png](prints/TC2.png) |
+| TC03 — Usuário inexistente, HTTP 400 e 3/3 testes | [TC3.png](prints/TC3.png) |
+| TC04 — Campos vazios, HTTP 400 e 3/3 testes | [TC4.png](prints/TC4.png) |
+| TC05 — Credenciais inválidas, HTTP 400 e 3/3 testes | [TC5.png](prints/TC5.png) |
+| Projeto Supabase criado | [01_supabase_projeto.png](prints/01_supabase_projeto.png) |
+| Usuário registrado (dados pessoais ocultos) | [02_supabase_auth_usuario.png](prints/02_supabase_auth_usuario.png) |
+| Provedor Email habilitado | [02b_supabase_email_habilitado.png](prints/02b_supabase_email_habilitado.png) |
+
+Arquivos de suporte:
+- `postman/` — coleção JSON com as cinco requisições e Environment modelo sem credenciais reais.
+- `planilha/` — registro dos cinco cenários em Excel e CSV.
+- `VALIDACAO_TECNICA_POSTMAN.md` — execução técnica assistida, distinta da execução individual.
 - `GUIA_EXECUCAO.md` — procedimentos para reproduzir os testes.
 
-**Atenção:** caso as imagens não apareçam em `prints/`, elas ainda precisam ser anexadas ao repositório. Os resultados acima vêm das cinco capturas apresentadas no Postman Desktop, mas texto e planilha sozinhos não substituem as evidências visuais exigidas.
+**Evidências complementares ainda não publicadas:** painel das credenciais de API com chave mascarada; Workspace e Environment do Postman; demonstração visual dos headers e body JSON; print da planilha preenchida. Os registros e configurações estão documentados nos arquivos, mas os respectivos prints ainda precisam ser acrescentados para atender integralmente à lista do enunciado.
+
+**Segurança:** nenhuma evidência deve revelar senha, access_token, refresh_token ou chave privada.
 
 ## Referências
 
