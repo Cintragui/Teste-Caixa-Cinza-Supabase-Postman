@@ -1,0 +1,359 @@
+{
+  "info": {
+    "name": "Teste Caixa Cinza - Supabase Auth (5 cenários)",
+    "description": "FACENS, atividade individual. Cinco testes de autenticacao Supabase executados pelo aluno em 07/11/2026. A senha e a chave nao estao armazenadas aqui. Importe com o Environment modelo.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "TC01 - Login válido",
+      "description": "Credenciais corretas do usuário de teste confirmado.",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"TC01 - HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"TC01 - access_token presente\", function () { const data = pm.response.json(); pm.expect(data.access_token).to.be.a(\"string\").and.not.empty; });",
+              "pm.test(\"TC01 - token_type presente\", function () { const data = pm.response.json(); pm.expect(data.token_type).to.be.a(\"string\").and.not.empty; });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "auth": {
+          "type": "noauth"
+        },
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{api_key}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{legacy_anon_jwt}}",
+            "type": "text",
+            "disabled": true,
+            "description": "Apenas se usar chave anon JWT legada. Desabilitado com chave publishable."
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/v1/token?grant_type=password",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth",
+            "v1",
+            "token"
+          ],
+          "query": [
+            {
+              "key": "grant_type",
+              "value": "password"
+            }
+          ]
+        },
+        "description": "Credenciais corretas do usuário de teste confirmado."
+      },
+      "response": []
+    },
+    {
+      "name": "TC02 - Senha incorreta",
+      "description": "E-mail cadastrado com senha propositalmente incorreta.",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP de rejeicao 4xx\", function () { pm.expect(pm.response.code).to.be.within(400, 499); });",
+              "pm.test(\"Resposta de erro em JSON\", function () { const data = pm.response.json(); pm.expect(Boolean(data.error || data.error_description || data.msg || data.message || data.code || data.error_code)).to.eql(true); });",
+              "pm.test(\"Nao emite access_token\", function () { const data = pm.response.json(); pm.expect(data.access_token).to.be.undefined; });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "auth": {
+          "type": "noauth"
+        },
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{api_key}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{legacy_anon_jwt}}",
+            "type": "text",
+            "disabled": true,
+            "description": "Apenas se usar chave anon JWT legada. Desabilitado com chave publishable."
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{wrong_password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/v1/token?grant_type=password",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth",
+            "v1",
+            "token"
+          ],
+          "query": [
+            {
+              "key": "grant_type",
+              "value": "password"
+            }
+          ]
+        },
+        "description": "E-mail cadastrado com senha propositalmente incorreta."
+      },
+      "response": []
+    },
+    {
+      "name": "TC03 - Usuário inexistente",
+      "description": "E-mail de usuário não cadastrado.",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP de rejeicao 4xx\", function () { pm.expect(pm.response.code).to.be.within(400, 499); });",
+              "pm.test(\"Resposta de erro em JSON\", function () { const data = pm.response.json(); pm.expect(Boolean(data.error || data.error_description || data.msg || data.message || data.code || data.error_code)).to.eql(true); });",
+              "pm.test(\"Nao emite access_token\", function () { const data = pm.response.json(); pm.expect(data.access_token).to.be.undefined; });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "auth": {
+          "type": "noauth"
+        },
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{api_key}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{legacy_anon_jwt}}",
+            "type": "text",
+            "disabled": true,
+            "description": "Apenas se usar chave anon JWT legada. Desabilitado com chave publishable."
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{nonexistent_email}}\",\n  \"password\": \"{{invalid_password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/v1/token?grant_type=password",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth",
+            "v1",
+            "token"
+          ],
+          "query": [
+            {
+              "key": "grant_type",
+              "value": "password"
+            }
+          ]
+        },
+        "description": "E-mail de usuário não cadastrado."
+      },
+      "response": []
+    },
+    {
+      "name": "TC04 - Campos vazios",
+      "description": "Campos de e-mail e senha vazios.",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP de rejeicao 4xx\", function () { pm.expect(pm.response.code).to.be.within(400, 499); });",
+              "pm.test(\"Resposta de erro em JSON\", function () { const data = pm.response.json(); pm.expect(Boolean(data.error || data.error_description || data.msg || data.message || data.code || data.error_code)).to.eql(true); });",
+              "pm.test(\"Nao emite access_token\", function () { const data = pm.response.json(); pm.expect(data.access_token).to.be.undefined; });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "auth": {
+          "type": "noauth"
+        },
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{api_key}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{legacy_anon_jwt}}",
+            "type": "text",
+            "disabled": true,
+            "description": "Apenas se usar chave anon JWT legada. Desabilitado com chave publishable."
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"\",\n  \"password\": \"\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/v1/token?grant_type=password",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth",
+            "v1",
+            "token"
+          ],
+          "query": [
+            {
+              "key": "grant_type",
+              "value": "password"
+            }
+          ]
+        },
+        "description": "Campos de e-mail e senha vazios."
+      },
+      "response": []
+    },
+    {
+      "name": "TC05 - Credenciais inválidas",
+      "description": "Formato inválido de e-mail e senha fictícia.",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP de rejeicao 4xx\", function () { pm.expect(pm.response.code).to.be.within(400, 499); });",
+              "pm.test(\"Resposta de erro em JSON\", function () { const data = pm.response.json(); pm.expect(Boolean(data.error || data.error_description || data.msg || data.message || data.code || data.error_code)).to.eql(true); });",
+              "pm.test(\"Nao emite access_token\", function () { const data = pm.response.json(); pm.expect(data.access_token).to.be.undefined; });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "auth": {
+          "type": "noauth"
+        },
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{api_key}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{legacy_anon_jwt}}",
+            "type": "text",
+            "disabled": true,
+            "description": "Apenas se usar chave anon JWT legada. Desabilitado com chave publishable."
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{invalid_email}}\",\n  \"password\": \"{{invalid_password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/v1/token?grant_type=password",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth",
+            "v1",
+            "token"
+          ],
+          "query": [
+            {
+              "key": "grant_type",
+              "value": "password"
+            }
+          ]
+        },
+        "description": "Formato inválido de e-mail e senha fictícia."
+      },
+      "response": []
+    }
+  ]
+}
