@@ -1,6 +1,6 @@
 ID,Cenário,Entrada (sem credenciais reais),Resultado esperado,HTTP obtido,Resposta observada,Verificações,Status,Duração (ms),Evidência
-TC01,Login válido,Usuário cadastrado e senha correta,HTTP 200 + access_token,200,"token_type=bearer; access_token retornado (valor omitido)",3/3,OK,211,prints/tc01_resultado.png
-TC02,Senha incorreta,Usuário cadastrado e senha incorreta,"HTTP 4xx; sem token",400,error_code=invalid_credentials,3/3,OK,348,prints/tc02_resultado.png
-TC03,Usuário inexistente,E-mail inexistente e senha fictícia,"HTTP 4xx; sem token",400,error_code=invalid_credentials,3/3,OK,78,prints/tc03_resultado.png
-TC04,Campos vazios,E-mail e senha vazios,"HTTP 4xx; erro de validação",400,"error_code=validation_failed; msg=missing email or phone",3/3,OK,170,prints/tc04_resultado.png
-TC05,Credenciais inválidas,E-mail malformado e senha inválida,"HTTP 4xx; sem token",400,error_code=invalid_credentials,3/3,OK,122,prints/tc05_resultado.png
+TC01,Login válido,Usuário cadastrado e senha correta,HTTP 200 + access_token,200,"token_type=bearer; access_token retornado (valor omitido)",3/3,OK,211,prints/TC1.png
+TC02,Senha incorreta,Usuário cadastrado e senha incorreta,"HTTP 4xx; sem token",400,error_code=invalid_credentials,3/3,OK,348,prints/TC2.png
+TC03,Usuário inexistente,E-mail inexistente e senha fictícia,"HTTP 4xx; sem token",400,error_code=invalid_credentials,3/3,OK,78,prints/TC3.png
+TC04,Campos vazios,E-mail e senha vazios,"HTTP 4xx; erro de validação",400,"error_code=validation_failed; msg=missing email or phone",3/3,OK,170,prints/TC4.png
+TC05,Credenciais inválidas,E-mail malformado e senha inválida,"HTTP 4xx; sem token",400,error_code=invalid_credentials,3/3,OK,122,prints/TC5.png
