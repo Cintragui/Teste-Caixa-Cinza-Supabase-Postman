@@ -1,0 +1,13 @@
+# Segredos, arquivos locais e ambientes preenchidos
+.env
+.env.*
+!.env.example
+*.secrets.json
+*local.postman_environment.json
+postman/*private*
+postman/*secret*
+**/credentials*
+**/secrets*
+*.log
+.DS_Store
+__pycache__/
